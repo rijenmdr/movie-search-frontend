@@ -1,6 +1,16 @@
 import "server-only";
 
-import type { Movie } from "~/types/movie";
+import {
+  MOVIE_REVALIDATE_SECONDS,
+  SEARCH_REVALIDATE_SECONDS,
+  TRENDING_REVALIDATE_SECONDS,
+} from "~/constants/generic";
+import type {
+  Movie,
+  MovieDetails,
+  MovieSearchResponse,
+  MovieVideo,
+} from "~/types/movie";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -38,8 +48,29 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
 
 /** TMDB-backed trending movies fetch. */
 export function getTrendingMovies(): Promise<Movie[]> {
-  return apiFetch<Movie[]>("/movies/trending", { cache: "no-store" });
+  return apiFetch<Movie[]>("/movies/trending", {
+    next: { revalidate: TRENDING_REVALIDATE_SECONDS, tags: ["trending"] },
+  });
 }
 
-// TODO(candidate): add a searchMovies(query, page) function here once the API exposes
-// GET /movies/search — same apiFetch pattern as getTrendingMovies above.
+export function searchMovies(
+  query: string,
+  page: number,
+): Promise<MovieSearchResponse> {
+  const params = new URLSearchParams({ query, page: String(page) });
+  return apiFetch<MovieSearchResponse>(`/movies/search?${params}`, {
+    next: { revalidate: SEARCH_REVALIDATE_SECONDS, tags: ["search"] },
+  });
+}
+
+export function getMovie(id: number): Promise<MovieDetails> {
+  return apiFetch<MovieDetails>(`/movies/${id}`, {
+    next: { revalidate: MOVIE_REVALIDATE_SECONDS, tags: ["movie"] },
+  });
+}
+
+export function getMovieVideos(id: number): Promise<MovieVideo[]> {
+  return apiFetch<MovieVideo[]>(`/movies/${id}/videos`, {
+    next: { revalidate: MOVIE_REVALIDATE_SECONDS, tags: ["movie"] },
+  });
+}
