@@ -1,37 +1,37 @@
 "use client";
 
+import Form from "next/form";
 import { useState } from "react";
 
-export function SearchBar() {
-  const [query, setQuery] = useState("");
+interface SearchBarProps {
+  query?: string;
+}
 
-  // TODO(candidate): wire this up to lib/api.ts's searchMovies() and render results
-  // (with pagination) instead of just logging. See lib/api.ts and app/page.tsx.
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    console.log("TODO: search for", query);
-  }
+export function SearchBar({ query = "" }: SearchBarProps) {
+  const [value, setValue] = useState(query);
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full max-w-md gap-2">
-      <label htmlFor="movie-search" className="sr-only">
-        Search for a movie
-      </label>
-      <input
-        id="movie-search"
-        type="search"
-        name="query"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-        placeholder="Search for a movie…"
-        className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-brand-500 focus:outline-none"
-      />
+    <Form role="search" action="/" className="flex w-full max-w-md items-end gap-2">
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <label htmlFor="movie-search" className="text-sm font-medium text-foreground">
+          Search for a movie
+        </label>
+        <input
+          id="movie-search"
+          type="search"
+          name="query"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="Search for a movie…"
+          className="min-h-11 w-full rounded-md border border-border bg-surface px-3 py-2 text-base text-foreground placeholder:text-muted focus-visible:border-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400 sm:text-sm"
+        />
+      </div>
       <button
         type="submit"
-        className="rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-500"
+        className="min-h-11 min-w-24 rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400"
       >
         Search
       </button>
-    </form>
+    </Form>
   );
 }
