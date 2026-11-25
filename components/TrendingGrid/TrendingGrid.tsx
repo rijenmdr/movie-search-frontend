@@ -1,20 +1,33 @@
 import { MovieCard } from "~/components/MovieCard";
+import { SectionError } from "~/components/SectionError";
+import { getTrendingMovies } from "~/lib/api";
+import { PRIORITY_POSTER_COUNT } from "~/constants/generic";
 import type { Movie } from "~/types/movie";
 
-export interface TrendingGridProps {
-  movies: Movie[];
-}
+export async function TrendingGrid() {
+  let movies: Movie[];
+  try {
+    movies = await getTrendingMovies();
+  } catch (error) {
+    console.error("Failed to load trending movies", error);
+    return <SectionError />;
+  }
 
-export function TrendingGrid({ movies }: TrendingGridProps) {
   if (movies.length === 0) {
-    return <p className="text-sm text-muted">No trending movies right now.</p>;
+    return (
+      <p role="status" className="rounded-md border border-border bg-surface p-4 text-sm text-muted">
+        No trending movies right now.
+      </p>
+    );
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-      {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
+    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" aria-label="Trending movies">
+      {movies.map((movie, index) => (
+        <li key={movie.id}>
+          <MovieCard movie={movie} preloadPoster={index < PRIORITY_POSTER_COUNT} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
