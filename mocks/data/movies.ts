@@ -1,0 +1,58 @@
+import type { Movie } from "~/types/movie";
+
+export const trendingMovies: Movie[] = [
+  {
+    id: 27205,
+    title: "Inception",
+    overview: "A skilled dream thief is offered a chance to undo the past by entering one last mind.",
+    posterPath: "/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+    backdropPath: "/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
+    voteAverage: 8.4,
+    releaseDate: "2010-07-15",
+  },
+  {
+    id: 155,
+    title: "The Dark Knight",
+    overview: "A masked hero faces a citywide crisis that tests the limits of justice.",
+    posterPath: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    backdropPath: "/nMKdUUepR0i5zn0y1T4kienc1gi.jpg",
+    voteAverage: 8.5,
+    releaseDate: "2008-07-16",
+  },
+  {
+    id: 157336,
+    title: "Interstellar",
+    overview: "A small crew travels beyond familiar space in search of a future for humanity.",
+    posterPath: "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+    backdropPath: "/xJHokMbljA0u8xp9j5js7gZk9z8.jpg",
+    voteAverage: 8.4,
+    releaseDate: "2014-11-05",
+  },
+  {
+    id: 603,
+    title: "The Matrix",
+    overview: "A programmer discovers that the world around him may not be what it seems.",
+    posterPath: "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+    backdropPath: "/7u3pxc0K1wx32IleAkLv78MKgrw.jpg",
+    voteAverage: 8.2,
+    releaseDate: "1999-03-30",
+  },
+  {
+    id: 268,
+    title: "Batman",
+    overview: "A masked protector confronts a theatrical criminal threatening Gotham City.",
+    posterPath: "/cij4dd21v2Rk2YtUQbV5kW69WB2.jpg",
+    backdropPath: "/2va32apQP97gvUxaMnL5wYt4CRB.jpg",
+    voteAverage: 7.2,
+    releaseDate: "1989-06-21",
+  },
+  {
+    id: 693134,
+    title: "Dune: Part Two",
+    overview: "A young heir joins a desert people and faces a choice that could reshape the empire.",
+    posterPath: "/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+    backdropPath: "/xOMo8BRK7PfcJv9JCxA5Z5j2J4T.jpg",
+    voteAverage: 8.2,
+    releaseDate: "2024-02-27",
+  },
+];
